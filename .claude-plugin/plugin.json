@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "claude-father",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Claude Father — one always-on orchestrator session that controls your Claude Code sessions and parallel tasks from Telegram (built-in channel with forum-topics support) and iMessage",
   "author": {
     "name": "Pavlo",

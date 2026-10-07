@@ -30,7 +30,7 @@ done
 
 installed=$(claude plugin list 2>/dev/null)
 if [ -z "$CHANNELS" ]; then
-  [ -f "$TOKEN_FILE" ] || [ -n "$TELEGRAM_BOT_TOKEN" ] && CHANNELS="telegram"
+  [ -f "$TOKEN_FILE" ] || [ -f "${TOKEN_FILE:h}/.env" ] || [ -n "$TELEGRAM_BOT_TOKEN" ] && CHANNELS="telegram"
   for ch in imessage discord; do
     if echo "$installed" | grep -q "$ch@claude-plugins-official"; then
       CHANNELS="$CHANNELS,$ch"

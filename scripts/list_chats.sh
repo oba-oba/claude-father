@@ -11,7 +11,8 @@ ls -t "$HOME"/.claude/projects/*/*.jsonl 2>/dev/null | while read -r f; do
   shown=$((shown + 1))
   id=$(basename "$f" .jsonl)
   ts=$(stat -f '%Sm' -t '%Y-%m-%d %H:%M' "$f" 2>/dev/null || stat -c '%y' "$f" | cut -c1-16)
-  title=$(grep -o '"aiTitle":"[^"]*"' "$f" | tail -1 | cut -d'"' -f4)
+  title=$(grep -o '"customTitle":"[^"]*"' "$f" | tail -1 | cut -d'"' -f4)
+  [ -n "$title" ] || title=$(grep -o '"aiTitle":"[^"]*"' "$f" | tail -1 | cut -d'"' -f4)
   dir=$(grep -m1 -o '"cwd":"[^"]*"' "$f" | cut -d'"' -f4)
   if echo "$live_ids" | grep -q "^$id$"; then state="LIVE"; else state="off "; fi
   echo "$ts | $state | ${title:-<untitled>} | $id | $dir"
