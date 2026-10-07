@@ -4,6 +4,7 @@
 DIR="$(cd "$(dirname "$0")" && pwd)"
 MAP="$HOME/.claude/father/topics.json"
 [ -f "$MAP" ] || exit 0
+[ "$(jq -r '.auto_topics' "$MAP")" = "false" ] && exit 0
 input=$(cat)
 SID=$(echo "$input" | jq -r '.session_id // empty')
 TRANSCRIPT=$(echo "$input" | jq -r '.transcript_path // empty')
