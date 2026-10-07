@@ -18,6 +18,10 @@ CUTOFF=$(( $(date +%s) - MAX_AGE_DAYS * 86400 ))
   [ "$title" = "<untitled>" ] && continue
   te=$(date -j -f '%Y-%m-%d %H:%M' "$ts" +%s 2>/dev/null || date -d "$ts" +%s 2>/dev/null || echo 0)
   [ "$te" -ge "$CUTOFF" ] || continue
+  python3 - "$title" <<PYEOF 2>/dev/null && continue
+import json, sys
+sys.exit(0 if sys.argv[1] in json.load(open("$MAP")).get("ignore_titles", []) else 1)
+PYEOF
   known=$(python3 -c "import json;print(json.load(open('$MAP'))['topics'].get('$sid',{}).get('topic',''))" 2>/dev/null)
   [ -n "$known" ] && continue
   tid=$("$DIR/topics.sh" create "$GROUP" "$title") || { echo "could not create topic for '$title' (Telegram error above)" >&2; continue; }

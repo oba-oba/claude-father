@@ -44,6 +44,8 @@ Re-running `/claude-father:setup` is safe — it skips whatever is already done.
 
 The bot allowlists the group, creates one Topic per recent coding chat, and from then on: **type in a Topic → that session answers in the same Topic**. General topic = talk to Claude Father itself. Only chats active in the last 7 days get Topics — tell the bot "include chats up to a month" to widen it, or ask it to prune Topics you don't want.
 
+New chats get their Topic automatically: a `SessionStart` hook shipped with the plugin waits for the chat's title (set after the first reply) and creates the Topic. Chats whose titles are listed in `ignore_titles` in `~/.claude/father/topics.json` never get a Topic — handy for recurring scheduled chats.
+
 ## Run / restart later
 
 `/claude-father:start` in any session — or directly:
